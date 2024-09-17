@@ -1,6 +1,7 @@
 const express = require('express');
 const handlebars = require('express-handlebars');
 const router = require('./router')
+const mongoose = requite('mongoose');
 
 const PORT = 5000;
 const app = express();
