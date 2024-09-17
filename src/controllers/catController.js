@@ -1,8 +1,9 @@
 const router = require('express').Router();
 const Cat = require('../model/catModel');
 
-router.get('/', (req, res) => {
-    res.render('home/index');
+router.get('/', async (req, res) => {
+    const cats = await Cat.find().lean();
+    res.render('home/index', { cats });
 })
 
 router.route('/cat/add-cat')
@@ -15,7 +16,7 @@ router.route('/cat/add-cat')
             res.redirect('/');
         } catch (err) {
             console.log(err);
-            res.redirect('cat/add-cat');
+            res.redirect('/cat/add-cat');
         }
     })
 module.exports = router;
