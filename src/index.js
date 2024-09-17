@@ -1,7 +1,7 @@
 const express = require('express');
 const handlebars = require('express-handlebars');
+const mongoose = require('mongoose');
 const router = require('./router')
-const mongoose = requite('mongoose');
 
 const PORT = 5000;
 const app = express();
@@ -17,5 +17,9 @@ app.set('views', 'src/views')
 
 app.use(router);
 
-app.listen(PORT, () => console.log(`Server is listening on http://localhost:${PORT}...`));
+mongoose.connect('mongodb://localhost:27017/cat-shelter')
+    .then(() => {
+        console.log('DB Connected');
+        app.listen(PORT, () => console.log(`Server is listening on http://localhost:${PORT}...`));
+    })
 
