@@ -1,5 +1,6 @@
 const express = require('express');
 const handlebars = require('express-handlebars');
+const router = require('./router')
 
 const PORT = 5000;
 const app = express();
@@ -13,9 +14,7 @@ app.engine('hbs', handlebars.engine({
 app.set('view engine', 'hbs')
 app.set('views', 'src/views')
 
-app.get('/', (req, res) => {
-    res.render('home/index')
-})
+app.use(router);
 
 app.listen(PORT, () => console.log(`Server is listening on http://localhost:${PORT}...`));
 
