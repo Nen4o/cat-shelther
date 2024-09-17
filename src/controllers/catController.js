@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const Cat = require('../model/catModel');
 
 router.get('/', (req, res) => {
     res.render('home/index');
