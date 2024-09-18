@@ -50,5 +50,11 @@ router.route('/cat/shelter/:catId')
 
         res.render('catShelter', { cat });
     })
+    .post(async (req, res) => {
+        const catId = req.params.catId;
+
+        await Cat.deleteOne({ '_id': catId });
+        res.redirect('/');
+    })
 
 module.exports = router;
