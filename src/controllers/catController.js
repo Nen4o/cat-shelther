@@ -23,4 +23,25 @@ router.route('/cat/add-cat')
             res.redirect('/cat/add-cat');
         }
     })
+
+router.get('/cat/edit/:catId', async (req, res) => {
+    const catId = req.params.catId;
+    try {
+        const cat = await Cat.findById(catId).lean();
+        res.render('editCat', { cat });
+    } catch (err) {
+        console.log(err);
+        res.redirect('/');
+    }
+})
+
+router.post('/cat/edit/:catId', async (req, res) => {
+    const newCat = req.body;
+    const catId = req.params.catId;
+
+    await Cat.updateOne({ '_id': catId }, newCat);
+    res.redirect('/');
+    console.log(newCat);
+
+})
 module.exports = router;
