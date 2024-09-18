@@ -41,7 +41,14 @@ router.post('/cat/edit/:catId', async (req, res) => {
 
     await Cat.updateOne({ '_id': catId }, newCat);
     res.redirect('/');
-    console.log(newCat);
-
 })
+
+router.route('/cat/shelter/:catId')
+    .get(async (req, res) => {
+        const catId = req.params.catId;
+        const cat = await Cat.findById(catId).lean();
+
+        res.render('catShelter', { cat });
+    })
+
 module.exports = router;
