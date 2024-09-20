@@ -1,16 +1,15 @@
 const router = require('express').Router();
-const Cat = require('../model/catModel');
-const Breed = require('../model/breedModel');
+const catServices = require('../services/catServices');
+const breedServices = require('../services/breedServices');
 
 router.get('/', async (req, res) => {
-    const cats = await Cat.find().lean();
-
+    const cats = await catServices.getAll().lean();
     res.render('home/index', { cats });
 })
 
 router.route('/cat/add-cat')
     .get(async (req, res) => {
-        const breeds = await Breed.find().lean();
+        const breeds = await breedServices.findAll().lean();
 
         res.render('addCat', { breeds });
     })
