@@ -15,7 +15,8 @@ router.route('/cat/add-cat')
     })
     .post(async (req, res) => {
         try {
-            await Cat.create(req.body);
+            catServices.create(req.body);
+
             res.redirect('/');
         } catch (err) {
             console.log(err);
@@ -26,7 +27,7 @@ router.route('/cat/add-cat')
 router.get('/cat/edit/:catId', async (req, res) => {
     const catId = req.params.catId;
     try {
-        const cat = await Cat.findById(catId).lean();
+        const cat = await catServices.findById(catId).lean();
         res.render('editCat', { cat });
     } catch (err) {
         console.log(err);
@@ -38,21 +39,21 @@ router.post('/cat/edit/:catId', async (req, res) => {
     const newCat = req.body;
     const catId = req.params.catId;
 
-    await Cat.updateOne({ '_id': catId }, newCat);
+    await catServices.updateCat(newCat, catId);
     res.redirect('/');
 })
 
 router.route('/cat/shelter/:catId')
     .get(async (req, res) => {
         const catId = req.params.catId;
-        const cat = await Cat.findById(catId).lean();
+        const cat = await catServices.findById(catId).lean();
 
         res.render('catShelter', { cat });
     })
     .post(async (req, res) => {
         const catId = req.params.catId;
+        await catServices.deleteCat(catId);
 
-        await Cat.deleteOne({ '_id': catId });
         res.redirect('/');
     })
 
